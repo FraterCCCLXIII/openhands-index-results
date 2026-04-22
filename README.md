@@ -2,6 +2,8 @@
 
 This repository contains benchmark results for various OpenHands agents and LLM configurations.
 
+An HTML version of this documentation with **OpenHands design system** styling (same sticky top nav pattern as `OpenHands-Design/index.html`) lives at [`docs/index.html`](docs/index.html). Open that file in a browser or serve the `docs/` directory locally.
+
 ## Data Structure
 
 ### Agent-Centric Format (Recommended)

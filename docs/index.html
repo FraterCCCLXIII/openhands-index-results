@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OpenHands Index Results</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+/* Tokens aligned with OpenHands-Design / DESIGN.md */
+:root{
+  --bg:hsl(0 0% 5%);
+  --card:hsl(0 0% 7%);
+  --secondary:hsl(0 0% 8%);
+  --muted:hsl(0 0% 12%);
+  --border:hsl(0 0% 14%);
+  --muted-hover:hsl(0 0% 18%);
+  --fg:hsl(0 0% 98%);
+  --fg-muted:hsl(0 0% 55%);
+  --primary:hsl(0 0% 100%);
+  --primary-fg:hsl(0 0% 0%);
+  --success:#22c55e;
+  --warning:#f59e0b;
+  --info:#3b82f6;
+  --destructive:#dc2626;
+  --ring:#cccccc;
+  --shadow-card:0 1px 2px 0 hsl(0 0% 0% / 0.3);
+  --font-sans:'Inter',system-ui,sans-serif;
+  --font-mono:'JetBrains Mono',monospace;
+}
+
+html{scroll-behavior:smooth}
+body{font-family:var(--font-sans);background:var(--bg);color:var(--fg);line-height:1.6;-webkit-font-smoothing:antialiased}
+
+/* Top nav — same structure as OpenHands-Design/index.html */
+.nav{position:sticky;top:0;z-index:50;display:flex;align-items:center;flex-wrap:nowrap;gap:16px;padding:0 24px 0 16px;height:56px;background:hsl(0 0% 5% / 0.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);overflow:hidden}
+.nav-start{display:flex;align-items:center;flex-wrap:nowrap;gap:12px;flex-shrink:0;min-width:0}
+.nav-github{display:inline-flex;align-items:center;gap:6px;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px;color:var(--fg-muted);text-decoration:none;padding:4px 10px;border-radius:6px;border:1px solid var(--border);transition:all 0.2s;flex-shrink:0}
+.nav-github:hover{background:var(--muted);color:var(--fg);border-color:hsl(0 0% 24%)}
+.nav-links{display:flex;flex:1;justify-content:flex-end;gap:4px;list-style:none;margin:0;padding:0;min-width:0;flex-wrap:nowrap}
+.nav-links a{font-size:13px;color:var(--fg-muted);text-decoration:none;padding:6px 12px;border-radius:6px;transition:all 0.2s}
+.nav-links a:hover{color:var(--fg);background:var(--muted)}
+.nav-logo{display:flex;align-items:center;flex-shrink:0;opacity:0.85;transition:opacity 0.2s}
+.nav-logo:hover{opacity:1}
+.nav-logo svg{height:22px;width:auto;display:block}
+
+/* Doc body — README order, single column */
+.doc{max-width:820px;margin:0 auto;padding:48px 24px 80px}
+.doc > h1{font-size:2rem;font-weight:600;letter-spacing:-0.03em;line-height:1.15;margin-bottom:12px;color:var(--fg)}
+.doc .lead{font-size:16px;color:var(--fg-muted);margin-bottom:40px;max-width:640px}
+.doc h2{font-size:1.375rem;font-weight:600;letter-spacing:-0.02em;margin:40px 0 16px;color:var(--fg);padding-top:8px}
+.doc h2:first-of-type{margin-top:0}
+.doc h3{font-size:1.0625rem;font-weight:600;margin:28px 0 10px;color:var(--fg)}
+.doc p,.doc li{font-size:15px;color:var(--fg-muted);margin-bottom:12px}
+.doc ul, .doc ol{margin:0 0 16px 1.25rem}
+.doc li::marker{color:var(--fg-muted)}
+.doc a{color:var(--info);text-decoration:none;transition:opacity 0.2s}
+.doc a:hover{opacity:0.85;text-decoration:underline}
+.doc strong{color:var(--fg);font-weight:600}
+.doc .file-tree{font-family:var(--font-mono);font-size:13px;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px 20px;overflow-x:auto;color:var(--fg-muted);margin:16px 0 24px;line-height:1.5;white-space:pre;box-shadow:var(--shadow-card)}
+.doc pre{font-family:var(--font-mono);font-size:12px;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px 18px;overflow-x:auto;margin:16px 0 24px;color:var(--fg-muted);line-height:1.55}
+.doc code{font-family:var(--font-mono);font-size:0.9em;background:hsl(0 0% 10%);padding:2px 6px;border-radius:4px;color:var(--fg);border:1px solid var(--border)}
+.doc pre code{background:transparent;border:none;padding:0;font-size:inherit;color:inherit}
+.doc hr{border:none;border-top:1px solid var(--border);margin:40px 0}
+
+.footer{text-align:center;padding:40px 24px;font-size:13px;color:var(--fg-muted);border-top:1px solid var(--border)}
+.footer a{color:var(--fg-muted);text-decoration:none;transition:color 0.2s}
+.footer a:hover{color:var(--fg)}
+
+@media(max-width:768px){
+  .nav-links{display:none}
+  .doc{padding-top:32px}
+  .doc > h1{font-size:1.625rem}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav" aria-label="Primary">
+  <div class="nav-start">
+    <a class="nav-logo" href="https://github.com/OpenHands" target="_blank" rel="noopener noreferrer" aria-label="OpenHands on GitHub">
+      <svg viewBox="0 0 599.09 99.17" fill="#fff" aria-hidden="true"><path d="M159.74,53.71c0-18.39,11.81-31.21,28.17-31.21s28.17,12.82,28.17,31.21-11.81,31.21-28.17,31.21-28.17-12.82-28.17-31.21ZM205.29,53.71c0-13.16-7.17-21.68-17.38-21.68s-17.38,8.52-17.38,21.68,7.17,21.68,17.38,21.68,17.38-8.52,17.38-21.68Z"/><path d="M246.07,84.92c-5.74,0-9.95-2.28-12.74-5.57v19.82h-10.12v-59.47h10.12v4.72c2.78-3.29,7-5.57,12.74-5.57,12.4,0,19.48,10.46,19.48,23.03s-7.09,23.03-19.48,23.03ZM233.08,60.63v2.61c0,8.18,4.72,12.82,10.97,12.82,7.34,0,11.3-5.74,11.3-14.17s-3.96-14.17-11.3-14.17c-6.24,0-10.97,4.56-10.97,12.91Z"/><path d="M291.26,84.92c-12.65,0-21.51-9.36-21.51-23.03s8.77-23.03,21.09-23.03,19.65,9.7,19.65,21.85v3.37h-31.04c.76,7.59,5.32,12.23,11.81,12.23,4.98,0,8.94-2.53,10.29-7.09l8.69,3.29c-3.12,7.76-10.12,12.4-18.98,12.4ZM290.76,47.38c-5.23,0-9.28,3.12-10.8,9.11h20.33c-.08-4.89-3.12-9.11-9.53-9.11Z"/><path d="M317.25,83.99v-44.29h10.12v4.72c2.53-2.95,6.49-5.57,12.23-5.57,9.28,0,14.85,6.41,14.85,15.94v29.19h-10.12v-26.23c0-5.48-2.19-9.45-7.76-9.45-4.55,0-9.19,3.37-9.19,9.7v25.98h-10.12Z"/><path d="M404.17,23.43h10.8v60.57h-10.8v-26.49h-29.02v26.49h-10.8V23.43h10.8v24.63h29.02v-24.63Z"/><path d="M436.93,84.75c-8.43,0-14.93-5.15-14.93-13.07,0-8.44,6.33-12.15,14.85-13.92l12.23-2.53v-.76c0-4.22-2.19-6.83-7.59-6.83-4.81,0-7.34,2.19-8.52,6.5l-9.53-2.19c2.19-7.34,8.69-13.07,18.47-13.07,10.63,0,17.04,5.06,17.04,15.27v19.06c0,2.53,1.1,3.29,3.88,2.95v7.84c-7.34.84-11.22-.59-12.74-4.22-2.78,3.12-7.42,4.98-13.16,4.98ZM449.08,68.39v-5.4l-9.53,2.02c-4.3.93-7.51,2.28-7.51,6.24,0,3.46,2.53,5.4,6.41,5.4,5.4,0,10.63-2.87,10.63-8.27Z"/><path d="M469.17,83.99v-44.29h10.12v4.72c2.53-2.95,6.49-5.57,12.23-5.57,9.28,0,14.85,6.41,14.85,15.94v29.19h-10.12v-26.23c0-5.48-2.19-9.45-7.76-9.45-4.56,0-9.2,3.37-9.2,9.7v25.98h-10.12Z"/><path d="M532.56,84.92c-12.4,0-19.48-10.46-19.48-23.03s7.08-23.03,19.48-23.03c5.74,0,9.95,2.28,12.74,5.57v-21h10.12v60.57h-10.12v-4.64c-2.78,3.29-7,5.57-12.74,5.57ZM545.55,60.63c0-8.35-4.72-12.91-10.96-12.91-7.34,0-11.3,5.74-11.3,14.17s3.96,14.17,11.3,14.17c6.24,0,10.96-4.64,10.96-12.82v-2.61Z"/><path d="M560.54,75.56l7.59-6.07c2.62,4.3,7.68,7.17,12.82,7.17,4.3,0,8.27-1.52,8.27-5.48s-3.71-4.22-10.71-5.65c-7-1.43-15.01-3.21-15.01-12.65,0-8.1,7.09-14,17.29-14,7.76,0,14.68,3.46,17.88,8.35l-6.83,6.16c-2.53-3.96-6.75-6.24-11.64-6.24-4.13,0-6.83,1.86-6.83,4.81,0,3.21,3.2,3.8,8.77,4.98,7.51,1.6,16.95,3.21,16.95,13.33,0,8.94-8.18,14.68-18.22,14.68-8.18,0-16.36-3.29-20.33-9.36Z"/><path d="M64.97,14.8V1.93c0-1.07.86-1.93,1.93-1.93s1.93.86,1.93,1.93v12.87c0,1.07-.86,1.93-1.93,1.93s-1.93-.86-1.93-1.93Z"/><path d="M74.95,16.72l6.43-11.15c.53-.92,1.71-1.24,2.64-.71.92.53,1.24,1.71.71,2.64l-6.43,11.15c-.53.92-1.71,1.24-2.64.71-.92-.53-1.24-1.71-.71-2.64Z"/><path d="M58.85,16.72l-6.43-11.15c-.53-.92-1.71-1.24-2.64-.71-.92.53-1.24,1.71-.71,2.64l6.43,11.15c.53.92,1.71,1.24,2.64.71.92-.53,1.24-1.71.71-2.64Z"/><path d="M128.77,56.65c0-3.35.9-13.3,1.19-16.58.19-2.22-.07-3.44-.43-4.06-.26-.46-.67-.78-1.66-.84-.71-.05-1.49.16-2.07.68-.54.49-1.15,1.48-1.15,3.47v.11s-.89,15.12-.89,15.12c-.03.54-.29,1.05-.72,1.39-.42.34-.97.49-1.51.4l-9.29-1.47-10.02-1.33c-.93-.12-1.63-.89-1.67-1.82l-.55-11.95v-.1c-.25-4.76-.49-9.1-.49-10.44,0-3.75-.63-5.33-1.19-5.99-.44-.53-1.08-.76-2.44-.76-.49,0-.83.1-1.09.25-.25.15-.54.41-.82.94-.59,1.12-1.02,3.22-.86,6.88.21,4.76.53,8.31.85,11.51.32,3.2.63,6.1.81,9.47.27,5.28.25,8.92.03,11.39-.11,1.23-.27,2.23-.48,3.02-.2.75-.51,1.51-1.04,2.07-.64.69-1.56,1.02-2.52.79-.76-.18-1.29-.66-1.58-.97-.61-.64-1.04-1.46-1.21-1.89-.98-2.47-4.01-8.22-8.12-11.46-1.2-.95-2.07-1.22-2.62-1.26-.52-.04-.89.11-1.19.35-.33.26-.57.63-.69.99-.04.13-.06.22-.07.27,1.11,1.88,5.53,8.77,7.61,15.76,1.55,5.21,5.29,10.52,8.09,12.8,2.71,2.2,7.57,3.57,13.05,3.84,5.42.27,11.01-.57,14.95-2.33,7.6-3.41,9.14-10.91,9.84-14.16.54-2.52.55-5.22.4-7.72-.07-1.25-.18-2.41-.27-3.49-.09-1.04-.17-2.05-.17-2.88ZM110.59,24.28c0-1.17-.31-2.21-.83-2.91-.47-.63-1.16-1.07-2.26-1.07-.91,0-1.52.11-1.94.29-.39.16-.71.42-1,.9-.68,1.1-1.18,3.3-1.18,7.69l.48,10.39c.18,3.47.37,7.22.49,10.35l6.25.83v-26.47ZM114.45,51.31l5.58.88.76-12.93v-9.97c0-1.37-.56-2.21-1.22-2.74-.74-.6-1.6-.81-2-.81-.74,0-1.5.11-2.05.5-.42.3-1.07,1.01-1.07,3.05v22.01ZM124.65,32c1.15-.58,2.39-.76,3.48-.69,1.97.13,3.71.96,4.75,2.77.95,1.65,1.15,3.83.93,6.31-.3,3.43-1.18,13.11-1.18,16.25,0,.63.06,1.47.16,2.54.09,1.05.21,2.28.28,3.6.15,2.63.16,5.72-.48,8.75-.67,3.15-2.49,12.6-12.03,16.88-4.64,2.08-10.87,2.95-16.72,2.66-5.79-.28-11.64-1.73-15.29-4.7-3.44-2.8-7.59-8.79-9.35-14.69-1.99-6.67-6.29-13.24-7.36-15.11-.63-1.1-.43-2.4-.14-3.27.33-.98.98-2,1.94-2.77,1-.79,2.32-1.29,3.88-1.18,1.53.12,3.11.81,4.72,2.08,4.14,3.27,7.18,8.43,8.67,11.59.02-.15.03-.3.05-.46.19-2.21.23-5.65-.04-10.86-.17-3.26-.47-6.05-.79-9.29-.32-3.24-.65-6.87-.87-11.72-.17-3.88.23-6.82,1.31-8.86.56-1.06,1.32-1.9,2.28-2.46.96-.56,2.01-.78,3.04-.78,1.53,0,3.43.22,4.95,1.66.13-.29.28-.56.44-.81.7-1.13,1.63-1.93,2.77-2.42,1.1-.47,2.29-.6,3.46-.6,2.36,0,4.19,1.04,5.36,2.63.76,1.03,1.22,2.23,1.44,3.46,1.25-.57,2.51-.64,3.28-.64,1.31,0,3.02.53,4.43,1.68,1.49,1.21,2.65,3.11,2.65,5.74v2.71Z"/><path d="M5.12,56.65c0-3.35-.9-13.3-1.19-16.58-.19-2.22.07-3.44.43-4.06.26-.46.67-.78,1.66-.84.71-.05,1.49.16,2.07.68.54.49,1.15,1.48,1.15,3.47v.11s.89,15.12.89,15.12c.03.54.29,1.05.72,1.39.42.34.97.49,1.51.4l9.29-1.47,10.02-1.33c.93-.12,1.63-.89,1.67-1.82l.55-11.95v-.1c.25-4.76.48-9.1.48-10.44,0-3.75.63-5.33,1.19-5.99.44-.53,1.08-.76,2.44-.76.49,0,.83.1,1.09.25.25.15.54.41.82.94.59,1.12,1.02,3.22.86,6.88-.21,4.76-.53,8.31-.85,11.51-.32,3.2-.63,6.1-.81,9.47-.27,5.28-.25,8.92-.03,11.39.11,1.23.27,2.23.48,3.02.2.75.51,1.51,1.04,2.07.65.69,1.56,1.02,2.52.79.76-.18,1.29-.66,1.58-.97.61-.64,1.04-1.46,1.21-1.89.98-2.47,4.01-8.22,8.12-11.46,1.2-.95,2.07-1.22,2.62-1.26.52-.04.89.11,1.19.35.33.26.57.63.69.99.04.13.06.22.07.27-1.11,1.88-5.53,8.77-7.61,15.76-1.55,5.21-5.29,10.52-8.09,12.8-2.71,2.2-7.57,3.57-13.05,3.84-5.43.27-11.01-.57-14.95-2.33-7.6-3.41-9.15-10.91-9.84-14.16-.54-2.52-.55-5.22-.4-7.72.07-1.25.18-2.41.27-3.49.09-1.04.17-2.05.17-2.88ZM23.29,24.28c0-1.17.31-2.21.83-2.91.47-.63,1.16-1.07,2.26-1.07.91,0,1.52.11,1.95.29.39.16.71.42,1,.9.68,1.1,1.18,3.3,1.18,7.69l-.48,10.39c-.18,3.47-.37,7.22-.49,10.35l-6.25.83v-26.47ZM19.43,51.31l-5.58.88-.76-12.93v-9.97c0-1.37.56-2.21,1.22-2.74.74-.6,1.59-.81,2-.81.74,0,1.5.11,2.05.5.42.3,1.07,1.01,1.07,3.05v22.01ZM9.24,32c-1.15-.58-2.39-.76-3.48-.69-1.97.13-3.7.96-4.75,2.77-.95,1.65-1.15,3.83-.93,6.31.3,3.43,1.18,13.11,1.18,16.25,0,.63-.07,1.47-.16,2.54-.09,1.05-.21,2.28-.28,3.6-.15,2.63-.16,5.72.48,8.75.67,3.15,2.49,12.6,12.04,16.88,4.64,2.08,10.87,2.95,16.72,2.66,5.79-.28,11.65-1.73,15.29-4.7,3.44-2.8,7.59-8.79,9.35-14.69,1.99-6.67,6.29-13.24,7.36-15.11.63-1.1.43-2.4.14-3.27-.33-.98-.98-2-1.94-2.77-1-.79-2.32-1.29-3.88-1.18-1.53.12-3.11.81-4.72,2.08-4.14,3.27-7.18,8.43-8.67,11.59-.02-.15-.03-.3-.05-.46-.19-2.21-.23-5.65.04-10.86.17-3.26.47-6.05.79-9.29.32-3.24.65-6.87.87-11.72.17-3.88-.23-6.82-1.31-8.86-.56-1.06-1.32-1.9-2.28-2.46-.96-.56-2.01-.78-3.04-.78-1.53,0-3.43.22-4.95,1.66-.13-.29-.28-.56-.44-.81-.7-1.13-1.63-1.93-2.77-2.42-1.1-.47-2.28-.6-3.46-.6-2.36,0-4.19,1.04-5.36,2.63-.76,1.03-1.22,2.23-1.44,3.46-1.25-.57-2.51-.64-3.27-.64-1.31,0-3.02.53-4.43,1.68-1.49,1.21-2.64,3.11-2.64,5.74v2.71Z"/></svg>
+    </a>
+    <a class="nav-github" href="https://github.com/OpenHands/openhands-index-results" target="_blank" rel="noopener noreferrer" aria-label="openhands-index-results on GitHub">
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2 .37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+      openhands-index-results
+    </a>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#data-structure">Data structure</a></li>
+    <li><a href="#alternative-agents">Alternative agents</a></li>
+    <li><a href="#legacy-format">Legacy</a></li>
+    <li><a href="#supported-benchmarks">Benchmarks</a></li>
+    <li><a href="#benchmark-categories">Categories</a></li>
+    <li><a href="#adding-new-results">Add results</a></li>
+    <li><a href="#leaderboard">Leaderboard</a></li>
+  </ul>
+</nav>
+
+<article class="doc">
+  <h1>OpenHands Index Results</h1>
+  <p class="lead">This repository contains benchmark results for various OpenHands agents and LLM configurations. Visual design uses the same tokens and top navigation pattern as the <a href="https://www.all-hands.dev" target="_blank" rel="noopener noreferrer">OpenHands</a> UI (see DESIGN.md: near-black canvas, Inter / JetBrains Mono).</p>
+
+  <h2 id="data-structure">Data Structure</h2>
+
+  <h3>Agent-Centric Format (Recommended)</h3>
+  <p>Results are organized in the <code>results/</code> directory with the following structure:</p>
+  <div class="file-tree">results/
+├── {version}_{model_name}/
+│   ├── metadata.json
+│   └── scores.json</div>
+
+  <h3 id="directory-naming-convention">Directory Naming Convention</h3>
+  <p>Each agent directory follows the format: <code>{version}_{model_name}</code></p>
+  <ul>
+    <li><strong><code>{version}</code></strong>: Agent version (semantic version starting with <code>v</code>, e.g., <code>v1.8.3</code>)</li>
+    <li><strong><code>{model_name}</code></strong>: LLM model name (e.g., <code>claude-sonnet-4-5</code>, <code>GPT-5.2</code>)</li>
+  </ul>
+
+  <h3 id="metadata-json">metadata.json</h3>
+  <p>Contains agent metadata and configuration:</p>
+  <pre><code>{
+  "agent_name": "OpenHands",
+  "agent_version": "v1.8.3",
+  "model": "claude-sonnet-4-5",
+  "openness": "closed_api_available",
+  "tool_usage": "standard",
+  "submission_time": "2025-11-24T19:56:00.092895",
+  "directory_name": "v1.8.3_claude-sonnet-4-5"
+}</code></pre>
+  <p><strong>Fields:</strong></p>
+  <ul>
+    <li><strong>agent_name</strong>: Display name of the agent</li>
+    <li><strong>agent_version</strong>: Semantic version number (e.g., &quot;1.0.0&quot;, &quot;1.0.2&quot;)</li>
+    <li><strong>model</strong>: LLM model used</li>
+    <li><strong>openness</strong>: Model availability type — <code>closed_api_available</code>, <code>open_api_available</code>, or <code>open_weights_available</code></li>
+    <li><strong>tool_usage</strong>: <code>standard</code> or <code>custom_interface</code></li>
+    <li><strong>submission_time</strong>: ISO 8601 timestamp</li>
+  </ul>
+
+  <h3 id="scores-json">scores.json</h3>
+  <p>Contains benchmark scores and performance metrics:</p>
+  <pre><code>[
+  {
+    "benchmark": "swe-bench",
+    "score": 45.1,
+    "metric": "resolve_rate",
+    "total_cost": 32.55,
+    "average_runtime": 3600,
+    "tags": ["bug_fixing"]
+  },
+  ...
+]</code></pre>
+  <p><strong>Fields:</strong></p>
+  <ul>
+    <li><strong>benchmark</strong>: Benchmark identifier (e.g., &quot;swe-bench&quot;, &quot;commit0&quot;)</li>
+    <li><strong>score</strong>: Primary metric score (percentage or numeric value)</li>
+    <li><strong>metric</strong>: Type of metric (e.g., <code>resolve_rate</code>, <code>success_rate</code>)</li>
+    <li><strong>total_cost</strong>: Total API cost in USD</li>
+    <li><strong>average_runtime</strong>: Average runtime per instance in seconds (optional)</li>
+    <li><strong>tags</strong>: Category tags for grouping (e.g., <code>[&quot;bug_fixing&quot;]</code>, <code>[&quot;app_creation&quot;]</code>)</li>
+  </ul>
+
+  <h2 id="alternative-agents">Alternative Agents</h2>
+  <p>Results from non-OpenHands agents (Claude Code, Codex, etc.) are stored in the <code>alternative_agents/</code> directory, organized by agent type and model:</p>
+  <div class="file-tree">alternative_agents/
+├── claude_code/
+│   └── {model_name}/
+│       ├── metadata.json
+│       └── scores.json
+├── openhands_subagents/
+│   └── {model_name}/
+│       ├── metadata.json
+│       └── scores.json</div>
+  <p>Each model directory under an agent type uses the same <code>metadata.json</code> and <code>scores.json</code> format as <code>results/</code>. The <code>directory_name</code> field in <code>metadata.json</code> should match the model name (same rule as <code>results/</code>).</p>
+  <p>The validation script (<code>scripts/validate_schema.py</code>) automatically validates both <code>results/</code> and <code>alternative_agents/</code> directories. Alternative agent results are reported separately in both validation and progress reports.</p>
+
+  <h2 id="legacy-format">Legacy Format (Backward Compatible)</h2>
+  <p>The <code>1.0.0-dev1/</code> directory contains the original benchmark-centric JSONL files:</p>
+  <ul>
+    <li><code>swe-bench.jsonl</code></li>
+    <li><code>swe-bench-multimodal.jsonl</code></li>
+    <li><code>commit0.jsonl</code></li>
+    <li><code>swt-bench.jsonl</code></li>
+    <li><code>gaia.jsonl</code></li>
+  </ul>
+  <p>This format is maintained for backward compatibility.</p>
+
+  <h2 id="supported-benchmarks">Supported Benchmarks</h2>
+
+  <h3>Bug Fixing</h3>
+  <ul>
+    <li><strong>SWE-Bench</strong>: Resolving GitHub issues from real Python repositories</li>
+    <li><strong>SWE-Bench-Multimodal</strong>: Similar to SWE-Bench with multimodal inputs</li>
+  </ul>
+
+  <h3>App Creation</h3>
+  <ul>
+    <li><strong>Commit0</strong>: Building applications from scratch based on specifications</li>
+  </ul>
+
+  <h3>Test Generation</h3>
+  <ul>
+    <li><strong>SWT-Bench</strong>: Generating comprehensive test suites</li>
+  </ul>
+
+  <h3>Information Gathering</h3>
+  <ul>
+    <li><strong>GAIA</strong>: General AI assistant tasks requiring web search and reasoning</li>
+  </ul>
+
+  <h2 id="benchmark-categories">Benchmark Categories</h2>
+  <p>Results are grouped into 4 main categories on the leaderboard:</p>
+  <ol>
+    <li><strong>Bug Fixing</strong>: SWE-Bench, SWE-Bench-Multimodal</li>
+    <li><strong>App Creation</strong>: Commit0</li>
+    <li><strong>Test Generation</strong>: SWT-Bench</li>
+    <li><strong>Information Gathering</strong>: GAIA</li>
+  </ol>
+
+  <h2 id="adding-new-results">Adding New Results</h2>
+  <p>To add new benchmark results:</p>
+  <ol>
+    <li>Create a directory following the naming convention: <code>results/{version}_{model_name}/</code></li>
+    <li>Add <code>metadata.json</code> with agent configuration</li>
+    <li>Add <code>scores.json</code> with benchmark results</li>
+    <li>Commit and push to the repository</li>
+  </ol>
+  <p>Example:</p>
+  <pre><code># Create directory
+mkdir -p results/v1.8.3_claude-sonnet-4-5/
+
+# Add metadata
+cat &gt; results/v1.8.3_claude-sonnet-4-5/metadata.json &lt;&lt; 'EOF'
+{
+  "agent_name": "OpenHands",
+  "agent_version": "v1.8.3",
+  "model": "claude-sonnet-4-5",
+  "openness": "closed_api_available",
+  "tool_usage": "standard",
+  "submission_time": "2025-11-24T19:56:00.092895",
+  "directory_name": "v1.8.3_claude-sonnet-4-5"
+}
+EOF
+
+# Add scores
+cat &gt; results/v1.8.3_claude-sonnet-4-5/scores.json &lt;&lt; 'EOF'
+[
+  {
+    "benchmark": "swe-bench",
+    "score": 45.1,
+    "metric": "accuracy",
+    "cost_per_instance": 0.412,
+    "average_runtime": 3600,
+    "tags": ["bug_fixing"]
+  },
+  ...
+]
+EOF
+
+# Commit and push
+git add results/v1.8.3_claude-sonnet-4-5/
+git commit -m "Add results for OpenHands v1.8.3 with Claude 4.5 Sonnet"
+git push origin main</code></pre>
+
+  <h2 id="leaderboard">Leaderboard</h2>
+  <p>View the live leaderboard at: <a href="https://huggingface.co/spaces/OpenHands/openhands-index" target="_blank" rel="noopener noreferrer">https://huggingface.co/spaces/OpenHands/openhands-index</a></p>
+
+  <h2 id="license">License</h2>
+  <p>MIT License — See repository for details.</p>
+</article>
+
+<footer class="footer">
+  OpenHands UI tokens &amp; nav pattern · <a href="https://github.com/OpenHands/openhands-index-results" target="_blank" rel="noopener noreferrer">openhands-index-results</a>
+</footer>
+
+</body>
+</html>
